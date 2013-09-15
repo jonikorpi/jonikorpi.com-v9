@@ -12,7 +12,7 @@ $line-height: 22;
 // Typography
 
 @mixin text-font { font-family: elena-web-basic, serif; }
-@mixin ui-font  	{ font-family: ff-dagny-web-pro, sans-serif; }
+@mixin ui-font  	{ font-family: elena-web-basic, sans-serif; }
 @mixin code-font { font-family: Menlo, Consolas, monospace; }
 
 // Colours
@@ -64,8 +64,8 @@ a {
 
 h1, h2, h3, h4, h5, h6,
 strong {
-  @include ui-font;
   color: $emphasis;
+  text-rendering: optimizeLegibility;
 }
 
 code {
@@ -79,6 +79,18 @@ code {
 //
 // Repeating elements
 //
+
+.logo {
+  font-size: em(26);
+  line-height: lines(1, 26);
+  text-transform: uppercase;
+  letter-spacing: em(4, 26);
+  margin: auto;
+  position: absolute;
+  left: 0; top: 0; bottom: 0; right: 0;
+  text-align: center;
+  height: lines(1, 26);
+}
 
 
 //

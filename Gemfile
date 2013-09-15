@@ -3,6 +3,8 @@
 source 'http://rubygems.org'
 
 gem "middleman", "~>3.1.5"
+gem "middleman-sync", "~> 3.0.12"
+
 gem "middleman-blog", "~> 3.2.0"
 gem "kramdown"
 gem "builder", "~> 3.0.0"
