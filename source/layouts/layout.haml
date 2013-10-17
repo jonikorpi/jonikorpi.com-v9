@@ -8,7 +8,6 @@
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
 
     = stylesheet_link_tag "main"
-    =# javascript_include_tag "modernizr"
 
     :javascript
       (function() {
@@ -26,11 +25,7 @@
     %meta{property: "og:image",            content: ""}
 
   %body{class: "#{page_classes}"}
-    = yield
+    #page-container.all-categories-mode
+      = yield
 
-    = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"
-    :javascript
-      /*if (typeof jQuery == 'undefined') {
-        document.write(unescape("%3Cscript src='/javascripts/jquery.min.js'%3E%3C/script%3E"));
-      }*/
     = javascript_include_tag "main"

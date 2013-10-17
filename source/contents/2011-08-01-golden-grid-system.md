@@ -1,6 +1,5 @@
 ---
 title: Golden Grid System
-project: true
 ---
 
 **[Golden Grid System](http://goldengridsystem.com) is a completely fluid-width grid system** for responsive web design.

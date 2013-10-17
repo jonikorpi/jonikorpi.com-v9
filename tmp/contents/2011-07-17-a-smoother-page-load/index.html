@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 oldie no-js" lang="en" /> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie no-js" lang="en" /> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie no-js" lang="en" /> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class='no-js' lang='en'>
+  <!--<![endif]-->
+  <head>
+    <meta charset='utf-8'>
+    <title>
+      A Smoother Page Load
+    </title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href="/stylesheets/main.css?1382037273" media="screen" rel="stylesheet" type="text/css" />
+    <script>
+      (function() {
+        var config = {
+          kitId: 'gwe8nbv',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <link href="/images/" rel="icon" type="image/" />
+    <link rel="apple-touch-icon" type="image/png" href="/images/" />
+    <meta content='' name='msapplication-TileImage'>
+    <meta content='' name='msapplication-TileColor'>
+    <meta content='' property='og:image'>
+  </head>
+  <body class='contents contents_2011-07-17-a-smoother-page-load contents_2011-07-17-a-smoother-page-load_index'>
+    <div class='all-categories-mode' id='page-container'>
+      <p>I finally have a blog. For the longest time I haven’t been able to let out the endless rambles about all the little design detail and theories bouncing around in my head. Now I can, and <em>will.</em></p>
+    
+      <p>I’m going to start by going over a little trick I discovered when designing this site. When you opened this page, you may noticed that it took a moment longer to load than usual, and that it didn’t just blink into existence, but <em>faded in.</em></p>
+    
+      <p>The culprit behind the extra loading time is the <a href="http://blog.typekit.com/2011/05/25/loading-typekit-fonts-asynchronously/">asynchronous Typekit snippet</a>, which loads the web fonts used on this site. Unlike the regular Typekit snippet, the asynchronous one doesn’t automatically protect you against the Flash of Unstyled Content that can happen if the fonts don’t load quickly enough, so I had to take care of that manually.</p>
+    
+      <p>I had to make sure no text elements on the page would show until the fonts have finished loading. To accomplish this, I simply set the opacity of all text on the page to zero using the <code>.wf-loading</code> class provided by the Typekit snippet. I also added a fallback for versions of IE that don’t support opacity.</p>
+    
+      <pre><code>.wf-loading h1,
+      .wf-loading h2,
+      .wf-loading h3,
+      .wf-loading p,
+      .wf-loading li {
+      	opacity: 0;
+      }
+    
+      .ie.wf-loading h1,
+      .ie.wf-loading h2,
+      .ie.wf-loading h3,
+      .ie.wf-loading p,
+      .ie.wf-loading li {
+      	visibility: hidden; /* Old IE */
+      }
+      </code></pre>
+    
+      <p>While playing around with this, I realised I could also control how the text eventually appears after the fonts have finished loading. By adding a very short CSS transition, I could make it fade in.</p>
+    
+      <pre><code>h1, h2, h3, p, li {
+      	opacity: 1;
+      	visibility: visible; /* Old IE */
+      	-webkit-transition: opacity 0.24s ease-in-out;
+      	   -moz-transition: opacity 0.24s ease-in-out;
+      	        transition: opacity 0.24s ease-in-out;
+      }
+      </code></pre>
+    
+      <p>This should work in most modern desktop and mobile browsers, including IE9. The fade-in might feel a bit laggy on underpowered computers and mobile devices that don’t use GPU rendering, but that’s okay, since it’ll feel more or less just like a regular blinking-into-existence page load.</p>
+    
+      <p>There was one downside though: hiding the content made the initial load seem slower. Even though the site is progressively rendering into existence in the background, we can’t see it, which makes the load time <em>feel</em> longer.</p>
+    
+      <p>To alleviate this effect, I added a little loading spinner as a GIF image. Since the spinner needed to appear immediately, I embedded it into my stylesheet using a <a href="http://css-tricks.com/5970-data-uris/">data URI</a>. I used Opinionated Geek’s <a href="http://www.opinionatedgeek.com/dotnet/tools/base64encode/">Base 64 encoder</a> to encode image and embedded it as follows:</p>
+    
+      <pre><code>.wf-loading #content header {
+      	background:
+      		url(data:image/gif;base64,lots-of-base64…)
+      		center center no-repeat
+      	;
+      }
+      </code></pre>
+    
+      <figure>
+      	<img src="../images/old-posts/a-smoother-page-load.png" alt="Loading spinner vs. no loading spinner" />
+      	<figcaption>Before and after. The spinner makes it clear something is happening.</figcaption>
+      </figure>
+    
+      <p>This should work just fine in all modern browsers, including IE8–9. IE6–7 will simply ignore it, which is fine by me. This is just a minor detail after all.</p>
+    
+      <p>The resulting effect is pretty interesting, isn’t it? It doesn’t feel like a regular HTML page load, but not exactly like an AJAX load either.</p>
+    
+      <p>This technique could also be applied to images or even the entire page. Theoretically you could even create all sorts of Powerpoint-esque transitions using CSS transforms. It’s good to practice restraint though, as these effects can be quite performance-intensive. Also, the simpler and faster the transition is, the less likely it is to annoy anyone — good transitions are felt, not noticed. Personally, I think this one turned out pretty good, but I’d love to hear your opinions about it <a href="http://twitter.com/jonikorpi">on Twitter</a>.</p>
+    
+      <p><strong>Update on 23 Jul 2011:</strong> The IE fallback was causing the fade-in to feel jerky in Safari, so I split it off into a separate declaration using an <a href="http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/">IE conditional class</a>. It will probably not work in IE6, but will in IE7–8.</p>
+    
+      <p><strong>Update on 2 Aug 2011:</strong> The fade-in on this site is currently disabled while I’m investigating whether it has something to do with the mysterious plummeting of this site’s Google ranking.</p>
+    
+      <p><strong>Update on 10 Aug 2011:</strong> The fade-in is back in action. It doesn’t seem to have caused my ranking problems.</p>
+    </div>
+    <script src="/javascripts/main.js?1382037273" type="text/javascript"></script>
+  </body>
+</html>

@@ -2,6 +2,8 @@
 @import 'compass';
 @import 'reset';
 
+* { @include transition(all 0.262s ease-out); }
+
 //
 // Variables
 //
@@ -11,27 +13,23 @@ $line-height: 22;
 
 // Typography
 
-@mixin text-font { font-family: elena-web-basic, serif; }
-@mixin ui-font  	{ font-family: elena-web-basic, sans-serif; }
+@mixin text-font { font-family: "elena-web-basic", serif; } // 300, 400, 600, 700, 800
+@mixin ui-font   { font-family: "elena-web-basic", serif; }
 @mixin code-font { font-family: Menlo, Consolas, monospace; }
 
-// Colours
+
 $primary-hue:   270;
 $secondary-hue: 270 - (360/1.618);
 
 $background:  hsl($primary-hue, 23.6%, 9%);
-$highlight:   hsl($primary-hue, 9%, 14.6%);
-$purple:      hsl($primary-hue, 23.6%, 14.6%);
-$offset:      hsl($primary-hue, 23.6%, 76.4%);
+$highlight:   hsl($primary-hue, 14.6%, 14.6%);
+$offset:      hsl($primary-hue, 23.6%, 23.6%);
 
-$aside:       hsl($secondary-hue, 2.6%, 38.2%);
-$body:        hsl($secondary-hue, 5.6%, 61.8%);
-$emphasis:    hsl($secondary-hue, 14.6%, 76.4%);
+$aside:       hsl($secondary-hue, 23.6%, 50%);
+$body:        hsl($secondary-hue, 14.6%, 61.8%);
+$emphasis:    hsl($secondary-hue, 38.2%, 85.4%);
 
-$link:        hsl($secondary-hue, 38.2%, 61.8%);
-
-// Media queries
-$m320: "screen and (min-width: 320px)";
+$link:        $emphasis;
 
 
 //
@@ -48,51 +46,264 @@ body {
 }
 
 a {
-  color: $link;
+  color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
 
   &:hover {
-    border-bottom-color: $link;
+    color: $link;
   }
 
   &:active {
-    color: $aside;
-    border-color: $aside;
+    color: $offset;
   }
 }
 
 h1, h2, h3, h4, h5, h6,
 strong {
+  @include ui-font;
   color: $emphasis;
-  text-rendering: optimizeLegibility;
 }
 
 code {
   @include code-font;
 }
 
-::selection      { background: hsl($primary-hue, 38.2%, 61.8%); color: $emphasis; }
--moz-::selection { background: hsl($primary-hue, 38.2%, 61.8%); color: $emphasis; }
+::selection      { background: $emphasis; color: $background; }
+-moz-::selection { background: $emphasis; color: $background; }
 
 
 //
 // Repeating elements
 //
 
-.logo {
-  font-size: em(26);
-  line-height: lines(1, 26);
-  text-transform: uppercase;
-  letter-spacing: em(4, 26);
-  margin: auto;
+.viewport,
+.canvas,
+.bg,
+.fg,
+.section-header,
+.close-button,
+.viewport-expand-button {
   position: absolute;
-  left: 0; top: 0; bottom: 0; right: 0;
+  left: 0; top: 0; right: 0; bottom: 0;
+  margin: auto;
+}
+
+.viewport {
+  //border: 1px dashed $offset;
+  overflow: hidden;
+}
+
+.locator {
+  //border: 1px dashed $aside;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  //border: 1px solid $body;
+  width: 50%;
+  height: 50%;
+}
+
+.bg {
+  //background: $offset center center no-repeat;
+}
+
+.fg {
+  //background: $highlight;
+}
+
+.section-header {
   text-align: center;
-  height: lines(1, 26);
+  z-index: 100;
+  height: lines(1) + em(13) + em(12);
+
+  .active-viewport & {
+    bottom: auto;
+    top: 9%;
+    bottom: 91%;
+  }
+
+  h1 {
+    font-size: em(26);
+    line-height: lines(1, 26);
+    background: $emphasis;
+    color: $highlight;
+    display: inline-block;
+    padding: em(13, 26) em(18, 26) em(12, 26);
+    @include border-radius( 1px );
+    overflow: hidden;
+  }
+}
+
+.close-button {
+  left: auto;
+  right: -100%;
+  top: 9%;
+  padding-right: em(34);
+  margin-top: em(42) / -2;
+  z-index: 9999;
+
+  .active-viewport & {
+    right: 5.6%;
+  }
+
+  .cross {
+    font-size: em(42);
+    line-height: 1;
+    position: absolute;
+    right: 0; top: 0;
+  }
+
+  .alternatives {
+    padding-top: em(12);
+    font-style: italic;
+    color: $aside;
+
+    strong {
+      color: $body;
+      font-weight: normal;
+      font-style: normal;
+    }
+  }
+}
+
+.viewport-expand-button {
+  display: none;
+  z-index: 9999;
+
+  .all-categories-mode & {
+    display: block;
+  }
 }
 
 
 //
 // Structure
 //
+
+#page-container {
+  @include box-sizing(border-box);
+  height: 100%;
+  position: relative;
+  @include perspective(1000);
+  @include translate3d(0,0,0);
+  overflow: hidden;
+
+  .all-categories-mode & {
+    padding: 3.4%;
+  }
+}
+
+.viewport {
+  //opacity: 0;
+
+  .all-categories-mode & {
+    //opacity: 1;
+    cursor: pointer;
+  }
+
+  &:nth-child(1) {
+    bottom: 100%;
+
+    .all-categories-mode & {
+      top: 0;
+      bottom: 66.666%;
+    }
+  }
+
+  &:nth-child(2) {
+    top: 100%;
+
+    .all-categories-mode & {
+      top: 33.333%;
+      bottom: 33.333%;
+    }
+  }
+
+  &:nth-child(3) {
+    top: 100%;
+
+    .all-categories-mode & {
+      top: 66.666%;
+      bottom: 0%;
+    }
+  }
+
+  &.active-viewport {
+    top: 0; bottom: 0;
+    //opacity: 1;
+  }
+}
+
+.canvas {
+  height: lines(5);
+  width: lines(5);
+  @include border-radius( em(1) );
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    background: hsla($primary-hue, 100%, 50%, 0.09);
+    position: absolute;
+    left: 0; top: 0; bottom: 0; right: 0;
+  }
+
+  .active-viewport & {
+    &:after {
+      background: transparent;
+    }
+  }
+}
+
+
+//
+// Things
+//
+
+.description,
+.launch-button {
+  display: none;
+}
+
+.heading {
+  opacity: 0;
+
+  .active-viewport & {
+    opacity: 1;
+  }
+}
+
+#less-framework {
+
+  .bg {
+    background: rgb(232,232,232);
+    text-align: center;
+
+    .column {
+      background: rgb(60,97,158);
+      display: inline-block;
+      height: 100%;
+      width: em(12);
+    }
+  }
+
+  .heading {
+    background: rgb(255,255,158);
+    text-align: center;
+    padding: em(8) 0;
+    position: absolute;
+    left: em(4); right: em(4);
+    top: 0; bottom: 0;
+    margin: auto;
+    height: em(13);
+
+    h1 {
+      color: #000;
+      font-size: em(13);
+      line-height: 1;
+      font-weight: normal;
+    }
+  }
+}
