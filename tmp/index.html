@@ -11,7 +11,7 @@
       Joni Korpi
     </title>
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-    <link href="/stylesheets/main.css?1382037273" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/main.css?1383077613" media="screen" rel="stylesheet" type="text/css" />
     <script>
       (function() {
         var config = {
@@ -28,78 +28,105 @@
     <meta content='' property='og:image'>
   </head>
   <body class='index'>
-    <div class='all-categories-mode' id='page-container'>
-      <div class='viewport' id='grid-systems'>
-        <header class='section-header'>
-          <h1>Grid Systems</h1>
-        </header>
-        <a class='close-button' href='#'>
-          <div class='cross'>&times;</div>
-          <div class='alternatives'>
-            <strong class='keypress'>ESC</strong>
-            or
-            <strong class='gesture'>pinch</strong>
-          </div>
-        </a>
-        <a class='viewport-expand-button' href='#'></a>
-        <article class='locator' id='less-framework'>
-          <div class='canvas'>
-            <div class='bg'>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
-              <div class='column'></div>
+    <div id='page-container'>
+      <div class='viewport active-viewport root-viewport' id='root'>
+        <div class='canvas'>
+          <div class='fg'>
+            <div class='category viewport' id='grid-systems'>
+              <div class='canvas'>
+                <div class='fg'>
+                  <header class='section-header'>
+                    <h1>Grid Systems</h1>
+                  </header>
+                  <article class='article viewport' id='less-framework'>
+                    <div class='canvas'>
+                      <div class='bg'>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                        <div class='column'></div>
+                      </div>
+                      <div class='fg'>
+                        <header class='heading'>
+                          <h1>Less Framework</h1>
+                        </header>
+                        <section class='description'>
+                          <p>An adaptive CSS grid system, and the ancestor of my later grid system: <a href="http://framelessgrid.com">Frameless</a>. It adapts by switching between four static-width layouts, depending on the width of the screen. Each layout shares the same column and gutter widths, making it easy to reuse elements between them.</p>
+                        
+                          <p>It was my first attempt to develop an alternative to adaptive fluid-width layouts. A lot of people at the time were also looking for a way out from using fluid layouts, causing Less Framework to become quite popular. I ended up developing four major versions of it.</p>
+                        </section>
+                        <div class='launch-button'>
+                          <a href='http://lessframework.com'>lessframework.com</a>
+                        </div>
+                      </div>
+                      <a class='close-button' href='#'>
+                        <div class='cross'>&times;</div>
+                        <div class='alternatives'>
+                          <strong class='keypress'>ESC</strong>
+                          or
+                          <strong class='gesture'>pinch</strong>
+                        </div>
+                      </a>
+                      <a class='viewport-expand-button' href='#'></a>
+                    </div>
+                  </article>
+                </div>
+                <a class='close-button' href='#'>
+                  <div class='cross'>&times;</div>
+                  <div class='alternatives'>
+                    <strong class='keypress'>ESC</strong>
+                    or
+                    <strong class='gesture'>pinch</strong>
+                  </div>
+                </a>
+                <a class='viewport-expand-button' href='#'></a>
+              </div>
             </div>
-            <div class='fg'>
-              <header class='heading'>
-                <h1>Less Framework</h1>
-              </header>
-              <section class='description'>
-                <p>An adaptive CSS grid system,** and the ancestor of my later grid system: <a href="http://framelessgrid.com">Frameless</a>. It adapts by switching between four static-width layouts, depending on the width of the screen. Each layout shares the same column and gutter widths, making it easy to reuse elements between them.</p>
-              
-                <p>It was my first attempt to develop an alternative to adaptive fluid-width layouts. A lot of people at the time were also looking for a way out from using fluid layouts, causing Less Framework to become quite popular. I ended up developing four major versions of it.</p>
-              </section>
-              <div class='launch-button'>
-                <a href='http://lessframework.com'>lessframework.com</a>
+            <div class='category viewport' id='archived-work'>
+              <div class='canvas'>
+                <div class='fg'>
+                  <header class='section-header'>
+                    <h1>Archived Work</h1>
+                  </header>
+                </div>
+                <a class='close-button' href='#'>
+                  <div class='cross'>&times;</div>
+                  <div class='alternatives'>
+                    <strong class='keypress'>ESC</strong>
+                    or
+                    <strong class='gesture'>pinch</strong>
+                  </div>
+                </a>
+                <a class='viewport-expand-button' href='#'></a>
+              </div>
+            </div>
+            <div class='category viewport' id='about'>
+              <div class='canvas'>
+                <div class='fg'>
+                  <header class='section-header'>
+                    <h1>About</h1>
+                  </header>
+                </div>
+                <a class='close-button' href='#'>
+                  <div class='cross'>&times;</div>
+                  <div class='alternatives'>
+                    <strong class='keypress'>ESC</strong>
+                    or
+                    <strong class='gesture'>pinch</strong>
+                  </div>
+                </a>
+                <a class='viewport-expand-button' href='#'></a>
               </div>
             </div>
           </div>
-        </article>
-      </div>
-      <div class='viewport' id='archived-work'>
-        <header class='section-header'>
-          <h1>Archived Work</h1>
-        </header>
-        <a class='close-button' href='#'>
-          <div class='cross'>&times;</div>
-          <div class='alternatives'>
-            <strong class='keypress'>ESC</strong>
-            or
-            <strong class='gesture'>pinch</strong>
-          </div>
-        </a>
-        <a class='viewport-expand-button' href='#'></a>
-      </div>
-      <div class='viewport' id='about'>
-        <header class='section-header'>
-          <h1>About</h1>
-        </header>
-        <a class='close-button' href='#'>
-          <div class='cross'>&times;</div>
-          <div class='alternatives'>
-            <strong class='keypress'>ESC</strong>
-            or
-            <strong class='gesture'>pinch</strong>
-          </div>
-        </a>
-        <a class='viewport-expand-button' href='#'></a>
+        </div>
       </div>
     </div>
-    <script src="/javascripts/main.js?1382037273" type="text/javascript"></script>
+    <script src="/javascripts/main.js?1383077613" type="text/javascript"></script>
   </body>
 </html>

@@ -2,21 +2,39 @@
 title: Joni Korpi
 ---
 
-.viewport#grid-systems
-  %header.section-header
-    %h1 Grid Systems
-  = partial "close-button"
-  %a.viewport-expand-button{href: "#"}
-  = partial "contents/less-framework"
+.viewport.active-viewport.root-viewport#root
+  .canvas
+    .fg
 
-.viewport#archived-work
-  %header.section-header
-    %h1 Archived Work
-  = partial "close-button"
-  %a.viewport-expand-button{href: "#"}
+      .category.viewport#new-work
+        .canvas
+          .fg
+            %header.section-header
+              %h1 New Work
+          = partial "viewport-controls"
 
-.viewport#about
-  %header.section-header
-    %h1 About
-  = partial "close-button"
-  %a.viewport-expand-button{href: "#"}
+      .category.viewport#grid-systems
+        .canvas
+          .fg
+            %header.section-header
+              %h1 Grid Systems
+            = partial "contents/less-framework"
+            = partial "contents/frameless"
+            = partial "contents/golden-grid-system"
+          = partial "viewport-controls"
+
+      .category.viewport#old-work
+        .canvas
+          .fg
+            %header.section-header
+              %h1 Old Work
+            = partial "contents/netmag-adaptive-static-design"
+            = partial "contents/little-picture"
+          = partial "viewport-controls"
+
+      .category.viewport#about
+        .canvas
+          .fg
+            %header.section-header
+              %h1 About Me
+          = partial "viewport-controls"

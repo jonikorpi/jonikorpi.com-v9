@@ -16,35 +16,52 @@ $(function() {
   // Viewports
   //
 
-  var $allViewports = $(".viewport");
   var $container = $("#page-container");
+
+  // Opening viewports
+
+  var openViewport = function($viewport) {
+    var viewportID = $viewport.attr("id");
+    var $parentViewport = $viewport.parent().closest(".viewport");
+
+    $viewport.removeClass("open-viewport").addClass("active-viewport");
+    $parentViewport.addClass("open-viewport").removeClass("active-viewport");
+    //$container.addClass(viewportID + "-active");
+  };
 
   $(".viewport-expand-button").on("click", function(event) {
     event.preventDefault();
-    var $viewport = $(this).closest(".viewport");
-    var viewportID = $viewport.attr("id");
-
-    if ( $container.hasClass("all-categories-mode") ) {
-      $container.removeClass();
-      $viewport.addClass("active-viewport");
-    }
+    openViewport( $(this).closest(".viewport") );
   });
 
+  // Exiting viewports
 
-  //
-  // Exiting viewport
-  //
+  var closeViewport = function($viewport) {
+    if ( $viewport.hasClass("root-viewport") ) {
+      $container.addClass("root-viewport-reached");
+      setTimeout(function() {
+        $container.removeClass("root-viewport-reached");
+      }, 141);
+      openViewport($viewport);
+    }
+    else {
+      var viewportID = $viewport.attr("id");
+      var $parentViewport = $viewport.parent().closest(".viewport");
 
-  $("body").bind('keydown', 'esc', function(event) {
+      $viewport.removeClass("active-viewport");
+      //$container.removeClass(viewportID + "-active");
+      openViewport($parentViewport);
+    }
+  };
+
+  $("body").bind('keyup', 'esc', function(event) {
     //event.preventDefault();
-    $allViewports.removeClass("active-viewport");
-    $container.addClass("all-categories-mode");
+    closeViewport( $(".active-viewport") );
   });
 
   $(".close-button").on("click", function(event) {
     event.preventDefault();
-    $allViewports.removeClass("active-viewport");
-    $container.addClass("all-categories-mode");
+    closeViewport( $(this).closest(".viewport") );
   });
 
 });
